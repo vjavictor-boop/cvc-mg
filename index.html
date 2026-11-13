@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CVC Minas Gerais | Lojas em MG</title>
+<meta name="description" content="Fale com a loja CVC mais perto de você em Minas Gerais. Atendimento pelo WhatsApp.">
+<meta name="theme-color" content="#0a00b4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a00b4; --navy-2:#2b20d6; --yellow:#ffd200;
+    --bg:#f4f6fb; --card:#ffffff; --text:#0f1b33; --muted:#66728c; --line:#e2e7f1;
+    --wa:#25d366; --wa-dark:#128c4a;
+    --radius:16px;
+    --shadow-sm:0 1px 2px rgba(11,31,75,.06);
+    --shadow-md:0 12px 28px rgba(11,31,75,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.4}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:620px;margin:0 auto;padding:0 16px}
+
+  /* ---------- Topo ---------- */
+  .topbar{height:4px;background:linear-gradient(90deg,var(--yellow) 0 70%,var(--navy) 70% 100%)}
+  header.site{background:var(--card);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;justify-content:center;gap:16px;padding:22px 0}
+  .brand img{height:58px;width:auto;display:block}
+  .brand .fallback{display:none;color:var(--navy);font-weight:800;font-size:24px;letter-spacing:-.5px;line-height:1;padding:9px 12px}
+  .brand.no-logo img{display:none}
+  .brand.no-logo .fallback{display:block}
+  .brand .divider{width:1px;height:34px;background:var(--line)}
+  .brand .city{font-size:26px;font-weight:700;color:var(--navy);letter-spacing:-.4px}
+
+  .intro{text-align:center;padding:36px 0 8px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-2)}
+  .eyebrow::before,.eyebrow::after{content:"";width:18px;height:2px;background:var(--yellow);border-radius:2px}
+  .intro h1{margin-top:10px;font-size:clamp(24px,6vw,32px);font-weight:800;letter-spacing:-.8px;color:var(--navy);line-height:1.15}
+  .intro p{margin-top:10px;color:var(--muted);font-size:15px}
+  .stats{display:flex;justify-content:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .stat{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text);box-shadow:var(--shadow-sm)}
+  .stat svg{color:var(--navy-2)}
+
+  /* ---------- Grupo VIP ---------- */
+  .vip{margin-top:28px;display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+  .vip[hidden]{display:none}
+  .vip::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,210,0,.10)}
+  .vip:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(11,31,75,.22)}
+  .vip-ico{flex:none;width:52px;height:52px;border-radius:14px;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(37,211,102,.35)}
+  .vip-txt{min-width:0;position:relative;z-index:1}
+  .vip-txt b{display:block;font-size:17px;font-weight:800;letter-spacing:-.2px}
+  .vip-txt small{display:block;font-size:13px;color:#c8d2ea;margin-top:2px}
+  .vip-btn{margin-left:auto;flex:none;position:relative;z-index:1;background:var(--yellow);color:var(--navy);font-weight:800;font-size:13px;padding:10px 16px;border-radius:999px}
+
+  /* ---------- Lojas ---------- */
+  .stores{margin-top:36px;padding-bottom:40px}
+  .stores-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .stores-head h2{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+  .stores-head span{font-size:13px;color:var(--muted);font-weight:600}
+
+  .search{position:relative;display:block;margin-top:16px}
+  .search input{width:100%;font:inherit;font-size:15px;padding:14px 16px 14px 46px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--text);box-shadow:var(--shadow-sm);transition:border-color .15s ease,box-shadow .15s ease}
+  .search input::placeholder{color:#97a1b6}
+  .search input:focus{outline:none;border-color:var(--navy-2);box-shadow:0 0 0 4px rgba(43,32,214,.12)}
+  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .chip{font:inherit;font-size:14px;font-weight:600;white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 14px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:background .15s ease,border-color .15s ease,color .15s ease}
+  .chip:hover{border-color:#b9c4dc}
+  .chip .n{font-size:11.5px;font-weight:700;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#eef1f8;color:var(--muted);display:inline-grid;place-items:center}
+  .chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+  .chip[aria-pressed="true"] .n{background:var(--yellow);color:var(--navy)}
+
+  .list{display:grid;gap:10px;margin-top:22px}
+  .store{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 16px;box-shadow:var(--shadow-sm);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+  .store:hover{transform:translateY(-2px);border-color:#cdd6e8;box-shadow:var(--shadow-md)}
+  .store-ico{flex:none;width:44px;height:44px;border-radius:12px;background:#eef2fa;color:var(--navy-2);display:grid;place-items:center}
+  .store-info{min-width:0;flex:1}
+  .store-name{display:block;font-weight:700;font-size:15.5px;color:var(--text)}
+  .store-sub{display:block;font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .store-cta{flex:none;display:inline-flex;align-items:center;gap:7px;background:var(--wa);color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:999px;transition:background .15s ease}
+  .store:hover .store-cta{background:var(--wa-dark)}
+  .store-cta.tel{background:var(--navy)}
+  .store:hover .store-cta.tel{background:var(--navy-2)}
+  .empty{text-align:center;color:var(--muted);padding:40px 8px;background:var(--card);border:1px dashed var(--line);border-radius:var(--radius)}
+
+  footer{border-top:1px solid var(--line);background:var(--card);text-align:center;color:var(--muted);font-size:12.5px;padding:20px 16px}
+
+  .chip:focus-visible,.store:focus-visible,.vip:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
+  @media (max-width:520px){
+    .brand{gap:12px;padding:18px 0}
+    .brand img{height:48px}
+    .brand .city{font-size:22px}
+    .brand .divider{height:28px}
+    .intro{padding-top:28px}
+    .vip{padding:16px;gap:14px}
+    .vip-btn{display:none}
+    .chips{flex-wrap:nowrap;overflow-x:auto;margin:16px -16px 0;padding:0 16px 4px;scrollbar-width:none;
+      -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent 100%);
+              mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent 100%)}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{flex:none}
+    .store-cta span{display:none}
+    .store-cta{padding:10px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header class="site">
+  <div class="wrap">
+    <div class="brand" id="brand">
+      <img src="logo-cvc.png" alt="CVC" onerror="document.getElementById('brand').classList.add('no-logo')">
+      <span class="fallback" aria-hidden="true">CVC</span>
+      <span class="divider" aria-hidden="true"></span>
+      <span class="city">Minas Gerais</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <span class="eyebrow">Lojas em Minas Gerais</span>
+    <h1>Fale com a loja CVC<br>mais perto de você</h1>
+    <p>Escolha a região ou busque pela cidade ou nome da loja.</p>
+    <div class="stats">
+      <span class="stat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <span id="total"></span>
+      </span>
+      <span class="stat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.1-4.4A9 9 0 1 1 21 12z"/></svg>
+        Atendimento pelo WhatsApp
+      </span>
+    </div>
+  </section>
+
+  <!-- O botão do Grupo VIP só aparece quando GRUPO_VIP (no script abaixo) tiver um link. -->
+  <a class="vip" id="vip" href="#" target="_blank" rel="noopener" hidden>
+    <span class="vip-ico" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.7-.5zM12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm0 18.3a8.3 8.3 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 12 20.3z"/></svg>
+    </span>
+    <span class="vip-txt">
+      <b>Grupo VIP de Promoções</b>
+      <small>Ofertas exclusivas no WhatsApp · gratuito</small>
+    </span>
+    <span class="vip-btn">Entrar no grupo</span>
+  </a>
+
+  <section class="stores" aria-labelledby="lojas-titulo">
+    <div class="stores-head">
+      <h2 id="lojas-titulo">Nossas lojas</h2>
+      <span id="contagem"></span>
+    </div>
+
+    <label class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar cidade ou loja" aria-label="Buscar cidade ou loja" autocomplete="off">
+    </label>
+
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por região"></div>
+
+    <div class="list" id="list" aria-live="polite"></div>
+  </section>
+</main>
+
+<footer>CVC Minas Gerais · Lojas em todo o estado</footer>
+
+<script>
+/* ============================================================
+   EDITE AQUI
+   GRUPO_VIP: link do grupo/comunidade no WhatsApp ("" esconde o botão)
+   Cada loja: [ nome, cidade, região, whatsapp ]
+     - região: precisa ser igual a um item de REGIOES
+     - whatsapp: DDD + número, só dígitos (ex: 31999983569)
+     - para loja sem WhatsApp, coloque "tel:" antes do número
+       (ex: "tel:31984060655") e o botão vira "Ligar"
+   A ordem aqui não importa: o site sempre mostra em ordem alfabética.
+   ============================================================ */
+const GRUPO_VIP = "";
+
+const REGIOES = [
+  "Belo Horizonte",
+  "Grande BH",
+  "Centro-Oeste",
+  "Sul de Minas",
+  "Vertentes e Zona da Mata",
+  "Vale do Aço e Leste",
+  "Norte e Noroeste",
+  "Triângulo e Alto Paranaíba"
+];
+
+const BH = "Belo Horizonte", GBH = "Grande BH", CO = "Centro-Oeste", SUL = "Sul de Minas",
+      ZM = "Vertentes e Zona da Mata", LES = "Vale do Aço e Leste", NOR = "Norte e Noroeste", TRI = "Triângulo e Alto Paranaíba";
+
+const LOJAS = [
+  // Belo Horizonte
+  ["Buritis · Aggeo Pio",            "Belo Horizonte", BH, "31999983569"],
+  ["Buritis",                        "Belo Horizonte", BH, "31984012827"],
+  ["Belvedere Mall",                 "Belo Horizonte", BH, "31990871987"],
+  ["Assaí Belvedere",                "Belo Horizonte", BH, "31990742306"],
+  ["Boulevard Shopping",             "Belo Horizonte", BH, "3125328850"],
+  ["Shopping Diamond Mall",          "Belo Horizonte", BH, "31995921179"],
+  ["Waldomiro Lobo",                 "Belo Horizonte", BH, "31971721289"],
+  ["Savassi",                        "Belo Horizonte", BH, "31982180587"],
+  ["Cidade Nova",                    "Belo Horizonte", BH, "3125163633"],
+  ["Galeria Ouvidor",                "Belo Horizonte", BH, "3132715454"],
+  ["Coração Eucarístico",            "Belo Horizonte", BH, "31995570883"],
+  ["Minas Shopping",                 "Belo Horizonte", BH, "3134260888"],
+  ["Barro Preto",                    "Belo Horizonte", BH, "31995707641"],
+  ["Alípio de Melo",                 "Belo Horizonte", BH, "31995627685"],
+  ["Shopping Del Rey",               "Belo Horizonte", BH, "31984720287"],
+  ["Padre Eustáquio",                "Belo Horizonte", BH, "3125312626"],
+  ["Silviano Brandão",               "Belo Horizonte", BH, "3133180060"],
+  ["Cidade Administrativa",          "Belo Horizonte", BH, "31998138130"],
+  ["Anchieta Garden Shopping",       "Belo Horizonte", BH, "31996850394"],
+  ["Via Brasil Pampulha",            "Belo Horizonte", BH, "tel:31984060655"],
+  ["Castelo",                        "Belo Horizonte", BH, "31984068025"],
+  ["Green Plaza Shopping",           "Belo Horizonte", BH, "3133476585"],
+  ["Jaraguá",                        "Belo Horizonte", BH, "31991560054"],
+  ["Santa Mônica",                   "Belo Horizonte", BH, "3134277358"],
+  ["Luxemburgo",                     "Belo Horizonte", BH, "31984059389"],
+  ["Funcionários",                   "Belo Horizonte", BH, "31998128214"],
+  ["Camargos",                       "Belo Horizonte", BH, "31980111388"],
+  ["Venda Nova",                     "Belo Horizonte", BH, "31971681606"],
+  ["Prado",                          "Belo Horizonte", BH, "31995036988"],
+  ["Betânia",                        "Belo Horizonte", BH, "31988496580"],
+  ["Galeria Chaves",                 "Belo Horizonte", BH, "31971016513"],
+  ["Galeria Tratex",                 "Belo Horizonte", BH, "3132442608"],
+  ["Lourdes",                        "Belo Horizonte", BH, "31986523875"],
+  ["Floresta",                       "Belo Horizonte", BH, "3125120001"],
+  ["Via Shopping Barreiro",          "Belo Horizonte", BH, "3125553444"],
+  ["Reserva Mall",                   "Belo Horizonte", BH, "31990866315"],
+
+  // Grande BH
+  ["Contagem · Eldorado",            "Contagem",           GBH, "3133618010"],
+  ["Contagem · Itaú Power Shopping", "Contagem",           GBH, "3139129082"],
+  ["Contagem · Petrolândia",         "Contagem",           GBH, "31993822027"],
+  ["Contagem · Industrial",          "Contagem",           GBH, "31993236428"],
+  ["Contagem · Cabral",              "Contagem",           GBH, "31995941396"],
+  ["Contagem · Só Marcas Outlet",    "Contagem",           GBH, "31973105045"],
+  ["Betim Centro",                   "Betim",              GBH, "31971046674"],
+  ["Betim · Partage Shopping",       "Betim",              GBH, "31995301122"],
+  ["Betim · Monte Carmo Shopping",   "Betim",              GBH, "3123913721"],
+  ["Ingá",                           "Betim",              GBH, "31984763121"],
+  ["Nova Lima",                      "Nova Lima",          GBH, "31997886183"],
+  ["Vespasiano",                     "Vespasiano",         GBH, "31971493416"],
+  ["Ibirité",                        "Ibirité",            GBH, "3135338267"],
+  ["Sarzedo",                        "Sarzedo",            GBH, "31998127730"],
+  ["Ribeirão das Neves",             "Ribeirão das Neves", GBH, "31989023995"],
+  ["Shopping Justinópolis",          "Ribeirão das Neves", GBH, "31995562005"],
+  ["Veneza",                         "Ribeirão das Neves", GBH, "31995711268"],
+  ["Santa Luzia",                    "Santa Luzia",        GBH, "31992790287"],
+  ["Santa Inês",                     "Sabará",             GBH, "31995298371"],
+  ["Caeté",                          "Caeté",              GBH, "3139504238"],
+  ["Lagoa Santa",                    "Lagoa Santa",        GBH, "31999267907"],
+  ["Matozinhos",                     "Matozinhos",         GBH, "31998753510"],
+
+  // Centro-Oeste
+  ["Divinópolis",                    "Divinópolis",        CO, "37988417000"],
+  ["Divinópolis Centro",             "Divinópolis",        CO, "37998237007"],
+  ["Shopping Pátio Divinópolis",     "Divinópolis",        CO, "37999092537"],
+  ["Itaúna",                         "Itaúna",             CO, "37988006060"],
+  ["Pará de Minas",                  "Pará de Minas",      CO, "37999730475"],
+  ["Nova Serrana",                   "Nova Serrana",       CO, "37999735913"],
+  ["Formiga",                        "Formiga",            CO, "37998734592"],
+  ["Oliveira",                       "Oliveira",           CO, "37988191983"],
+  ["Carmo do Cajuru",                "Carmo do Cajuru",    CO, "37988016564"],
+  ["Lagoa da Prata",                 "Lagoa da Prata",     CO, "37999222221"],
+  ["Bom Despacho",                   "Bom Despacho",       CO, "3735223763"],
+  ["Campo Belo",                     "Campo Belo",         CO, "35999247862"],
+  ["Shopping Sete Lagoas",           "Sete Lagoas",        CO, "31983266220"],
+
+  // Sul de Minas
+  ["Lavras",                         "Lavras",             SUL, "35988322668"],
+  ["Alfenas",                        "Alfenas",            SUL, "3532973900"],
+  ["Shopping Via Café",              "Varginha",           SUL, "3532143940"],
+  ["Varginha Centro",                "Varginha",           SUL, "3536066446"],
+  ["Três Pontas",                    "Três Pontas",        SUL, "35999516591"],
+  ["Muzambinho",                     "Muzambinho",         SUL, "35999541825"],
+
+  // Vertentes e Zona da Mata
+  ["São João del-Rei",               "São João del-Rei",   ZM, "32988609400"],
+  ["Barbacena",                      "Barbacena",          ZM, "32988646541"],
+  ["Conselheiro Lafaiete",           "Conselheiro Lafaiete", ZM, "31983397013"],
+  ["Congonhas",                      "Congonhas",          ZM, "31990823142"],
+  ["Ponte Nova",                     "Ponte Nova",         ZM, "3138173500"],
+  ["Manhuaçu",                       "Manhuaçu",           ZM, "33984374405"],
+  ["Muriaé",                         "Muriaé",             ZM, "32988173572"],
+
+  // Vale do Aço e Leste
+  ["Shopping Vale do Aço",           "Ipatinga",           LES, "31988330888"],
+  ["Timóteo",                        "Timóteo",            LES, "31971021100"],
+  ["Itabira",                        "Itabira",            LES, "31989789954"],
+  ["Governador Valadares",           "Governador Valadares", LES, "33984553656"],
+  ["Teófilo Otoni",                  "Teófilo Otoni",      LES, "3335221306"],
+
+  // Norte e Noroeste
+  ["Montes Claros Shopping",         "Montes Claros",      NOR, "38997286786"],
+  ["Santa Maria Mall",               "Montes Claros",      NOR, "38999382154"],
+  ["Janaúba",                        "Janaúba",            NOR, "38991158682"],
+  ["Pirapora",                       "Pirapora",           NOR, "38999282267"],
+  ["Paracatu",                       "Paracatu",           NOR, "38999938305"],
+  ["Unaí",                           "Unaí",               NOR, "38988087926"],
+  ["Vazante",                        "Vazante",            NOR, "34999071232"],
+
+  // Triângulo e Alto Paranaíba
+  ["Uberlândia",                     "Uberlândia",         TRI, "3432564100"],
+  ["Center Shopping Uberlândia",     "Uberlândia",         TRI, "34997213768"],
+  ["Uberlândia Shopping",            "Uberlândia",         TRI, "3432315111"],
+  ["Shopping Uberaba",               "Uberaba",            TRI, "3433159600"],
+  ["Uberaba · Abadia",               "Uberaba",            TRI, "34984142424"],
+  ["Ituiutaba",                      "Ituiutaba",          TRI, "34997774140"],
+  ["Pátio Central Shopping",         "Patos de Minas",     TRI, "3438255200"],
+  ["Carmo do Paranaíba",             "Carmo do Paranaíba", TRI, "34998131122"]
+].map(([nome, cidade, regiao, whats]) => ({ nome, cidade, regiao, whats }));
+
+/* ============================================================ */
+const MSG = "Olá! Vim pelo site da CVC Minas Gerais e gostaria de atendimento.";
+const TODAS = "Todas";
+const chipsEl = document.getElementById("chips");
+const listEl = document.getElementById("list");
+const qEl = document.getElementById("q");
+const contEl = document.getElementById("contagem");
+let atual = TODAS;
+
+if (GRUPO_VIP) { const v = document.getElementById("vip"); v.href = GRUPO_VIP; v.hidden = false; }
+
+const ordenadas = [...LOJAS].sort((a,b)=>a.nome.localeCompare(b.nome,"pt-BR",{numeric:true,sensitivity:"base"}));
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const plural = n => n + (n===1 ? " loja" : " lojas");
+
+document.getElementById("total").textContent = plural(LOJAS.length) + " em MG";
+
+const pinIcon = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+const waIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.5 13.5 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.2-.3-.3-.7-.5zM12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm0 18.3a8.3 8.3 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.3 8.3 0 1 1 12 20.3z"/></svg>';
+const telIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>';
+
+function renderChips(){
+  chipsEl.innerHTML = [TODAS, ...REGIOES].map(r=>{
+    const n = r===TODAS ? LOJAS.length : LOJAS.filter(l=>l.regiao===r).length;
+    return `<button class="chip" type="button" data-r="${esc(r)}" aria-pressed="${r===atual}">${esc(r)}<span class="n">${n}</span></button>`;
+  }).join("");
+}
+
+function card(l){
+  const ligar = l.whats.startsWith("tel:");
+  const num = l.whats.replace("tel:","");
+  const url = ligar ? `tel:+55${num}` : `https://wa.me/55${num}?text=${encodeURIComponent(MSG)}`;
+  const alvo = ligar ? "" : ' target="_blank" rel="noopener"';
+  const cta = ligar
+    ? `<span class="store-cta tel">${telIcon}<span>Ligar</span></span>`
+    : `<span class="store-cta">${waIcon}<span>WhatsApp</span></span>`;
+  return `<a class="store" href="${url}"${alvo} aria-label="${esc(l.nome)}, ${esc(l.cidade)}: ${ligar ? "ligar" : "abrir WhatsApp"}">
+    <span class="store-ico">${pinIcon}</span>
+    <span class="store-info"><span class="store-name">${esc(l.nome)}</span><span class="store-sub">${esc(l.cidade)}</span></span>
+    ${cta}
+  </a>`;
+}
+
+function renderList(){
+  const q = norm(qEl.value.trim());
+  const filtradas = ordenadas.filter(l =>
+    (atual===TODAS || l.regiao===atual) &&
+    (!q || norm(l.nome+" "+l.cidade+" "+l.regiao).includes(q))
+  );
+  contEl.textContent = plural(filtradas.length);
+  listEl.innerHTML = filtradas.length
+    ? filtradas.map(card).join("")
+    : '<p class="empty">Nenhuma loja encontrada. Tente outra cidade ou nome.</p>';
+}
+
+chipsEl.addEventListener("click", e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  atual = b.dataset.r;
+  chipsEl.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.r===atual));
+  renderList();
+});
+qEl.addEventListener("input", renderList);
+
+renderChips();
+renderList();
+</script>
+</body>
+</html>
